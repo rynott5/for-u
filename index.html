@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday 💗</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            overflow: hidden;
+            font-family: "Comic Sans MS", cursive;
+            background: linear-gradient(135deg, #ffd6e7, #d9eaff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* background bintang */
+
+        .star {
+            position: absolute;
+            color: white;
+            font-size: 20px;
+            animation: twinkle 2s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            from {
+                opacity: .2;
+                transform: scale(.7);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        /* balon */
+
+        .balloon {
+            position: absolute;
+            top: -120px;
+            font-size: 60px;
+            animation: balloonMove 8s linear infinite;
+        }
+
+        .balloon:nth-child(1) {
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .balloon:nth-child(2) {
+            left: 30%;
+            animation-delay: 2s;
+        }
+
+        .balloon:nth-child(3) {
+            right: 25%;
+            animation-delay: 4s;
+        }
+
+        .balloon:nth-child(4) {
+            right: 8%;
+            animation-delay: 1s;
+        }
+
+        @keyframes balloonMove {
+            0% {
+                top: -120px;
+                transform: rotate(-10deg);
+            }
+
+            50% {
+                transform: translateX(30px) rotate(10deg);
+            }
+
+            100% {
+                top: 110%;
+                transform: translateX(-20px) rotate(-10deg);
+            }
+        }
+
+        /* container */
+
+        .container {
+            text-align: center;
+            z-index: 5;
+        }
+
+        h1 {
+            color: #ff5f9e;
+            font-size: 45px;
+            margin-bottom: 15px;
+            animation: titleBounce 2s infinite;
+            text-shadow: 3px 3px white;
+        }
+
+        @keyframes titleBounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* kue */
+
+        .cake {
+            font-size: 130px;
+            cursor: pointer;
+            animation: cakeShake 2s infinite;
+            filter: drop-shadow(0 10px 10px rgba(0,0,0,.15));
+        }
+
+        @keyframes cakeShake {
+            0%, 100% {
+                transform: rotate(-4deg);
+            }
+
+            50% {
+                transform: rotate(4deg);
+            }
+        }
+
+        .hint {
+            color: #777;
+            margin-top: 5px;
+            margin-bottom: 20px;
+        }
+
+        /* tombol */
+
+        button {
+            border: none;
+            padding: 13px 25px;
+            border-radius: 30px;
+            background: #ff77aa;
+            color: white;
+            font-size: 17px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 70, 130, .3);
+            transition: .3s;
+        }
+
+        button:hover {
+            transform: scale(1.08);
+            background: #ff4f91;
+        }
+
+        /* surat */
+
+        .letter {
+            position: fixed;
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            background: #fffaf0;
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(0,0,0,.2);
+            z-index: 20;
+
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(.3);
+
+            transition: .8s ease;
+        }
+
+        .letter.show {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+
+        .letter h2 {
+            color: #ff5f9e;
+            margin-bottom: 15px;
+        }
+
+        .heart {
+            font-size: 40px;
+            display: inline-block;
+            animation: heartbeat 1s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.4);
+            }
+        }
+
+        #message {
+            min-height: 100px;
+            color: #555;
+            line-height: 1.7;
+            font-size: 17px;
+        }
+
+        .close {
+            margin-top: 20px;
+            background: #8bbcff;
+        }
+
+        /* hati melayang */
+
+        .floating-heart {
+            position: fixed;
+            bottom: -50px;
+            font-size: 25px;
+            animation: floatHeart 6s linear forwards;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                bottom: -50px;
+                opacity: 0;
+                transform: translateX(0) rotate(0);
+            }
+
+            20% {
+                opacity: 1;
+            }
+
+            50% {
+                transform: translateX(50px) rotate(20deg);
+            }
+
+            100% {
+                bottom: 110%;
+                opacity: 0;
+                transform: translateX(-50px) rotate(-20deg);
+            }
+        }
+
+        /* layar awal */
+
+        .welcome {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #ffc9df, #cde4ff);
+            z-index: 50;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transition: 1s;
+        }
+
+        .welcome.hide {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .welcome-box {
+            background: rgba(255,255,255,.75);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,.15);
+        }
+
+        .welcome-box h2 {
+            color: #ff5f9e;
+            margin-bottom: 20px;
+        }
+
+        /* responsive */
+
+        @media (max-width: 600px) {
+
+            h1 {
+                font-size: 32px;
+            }
+
+            .cake {
+                font-size: 100px;
+            }
+
+            .letter {
+                width: 88%;
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- layar pembuka -->
+
+    <div class="welcome" id="welcome">
+
+        <div class="welcome-box">
+
+            <h2>ada sesuatu buat bucill 💗</h2>
+
+            <p style="margin-bottom:20px;">
+                klik tombol di bawah untuk membuka
+            </p>
+
+            <button onclick="startWeb()">
+                buka kejutan ✨
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- balon -->
+
+    <div class="balloon">🎈</div>
+    <div class="balloon">🎈</div>
+    <div class="balloon">🎈</div>
+    <div class="balloon">🎈</div>
+
+
+    <!-- bintang -->
+
+    <div class="star" style="top:10%;left:20%;">✦</div>
+    <div class="star" style="top:20%;right:15%;">✧</div>
+    <div class="star" style="top:70%;left:10%;">✦</div>
+    <div class="star" style="top:80%;right:20%;">✧</div>
+    <div class="star" style="top:40%;left:5%;">✦</div>
+
+
+    <!-- isi utama -->
+
+    <div class="container">
+
+        <h1>🎉 Happy Birthday! 🎉</h1>
+
+        <div class="cake" onclick="openLetter()">
+            🎂
+        </div>
+
+        <p class="hint">
+            klik kuenyaaa ✨
+        </p>
+
+
+    </div>
+
+
+    <!-- surat -->
+
+    <div class="letter" id="letter">
+
+        <div class="heart">
+            💗
+        </div>
+
+        <h2>untuk kamu yang spesial</h2>
+
+        <p id="message"></p>
+
+        <button class="close" onclick="closeLetter()">
+            tutup surat
+        </button>
+
+    </div>
+
+
+    <script>
+
+        /* pesan ulang tahun */
+
+        const text = `
+selamat ulang tahun yaaa! 🎂
+
+semoga di umur yang baru ini,
+kamu selalu diberikan kebahagiaan,
+kesehatan, dan banyak hal baik.
+
+semoga semua impian kamu
+satu per satu bisa terwujud.
+
+jangan lupa untuk selalu tersenyum
+dan tetap jadi diri kamu sendiri.
+
+sekali lagi...
+happy birthday! 💗✨
+        `;
+
+        let index = 0;
+
+
+        /* mulai website */
+
+        function startWeb() {
+
+    document
+        .getElementById("welcome")
+        .classList.add("hide");
+
+    const music =
+        document.getElementById("birthdayMusic");
+
+    music.volume = 0.5;
+    music.play();
+
+    createHearts();
+
+}
+
+
+        /* buka surat */
+
+        function openLetter() {
+
+            const letter =
+                document.getElementById("letter");
+
+            letter.classList.add("show");
+
+            index = 0;
+
+            document
+                .getElementById("message")
+                .innerHTML = "";
+
+            typeWriter();
+
+        }
+
+
+        /* tutup surat */
+
+        function closeLetter() {
+
+            document
+                .getElementById("letter")
+                .classList.remove("show");
+
+        }
+
+
+        /* efek mengetik */
+
+        function typeWriter() {
+
+            if (index < text.length) {
+
+                let character = text.charAt(index);
+
+                if (character === "\n") {
+                    document
+                        .getElementById("message")
+                        .innerHTML += "<br>";
+                } else {
+                    document
+                        .getElementById("message")
+                        .innerHTML += character;
+                }
+
+                index++;
+
+                setTimeout(typeWriter, 45);
+
+            }
+
+        }
+
+
+        /* membuat hati melayang */
+
+        function createHeart() {
+
+            const heart =
+                document.createElement("div");
+
+            heart.className = "floating-heart";
+
+            const hearts = [
+                "💗",
+                "💖",
+                "💕",
+                "💓",
+                "💞"
+            ];
+
+            heart.innerHTML =
+                hearts[Math.floor(Math.random() * hearts.length)];
+
+            heart.style.left =
+                Math.random() * 100 + "vw";
+
+            heart.style.animationDuration =
+                (4 + Math.random() * 4) + "s";
+
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 8000);
+
+        }
+
+
+        function createHearts() {
+
+            setInterval(createHeart, 700);
+
+        }
+
+    </script>
+
+<audio id="birthdayMusic" loop>
+    <source src="birthday.mp3" type="audio/mpeg">
+</audio>
+
+</body>
+</html>
